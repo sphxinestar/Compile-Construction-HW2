@@ -1,0 +1,2516 @@
+終端機在文法中未使用
+
+   NOT
+   FOR
+
+
+狀態 46 衝突：2 項偏移/縮減
+狀態 107 衝突：2 項偏移/縮減
+狀態 108 衝突：2 項偏移/縮減
+狀態 161 衝突：1 項偏移/縮減
+
+
+文法
+
+    0 $accept: program $end
+
+    1 program: stat
+    2        | program stat
+
+    3 stat: function_definition
+    4     | declaration
+    5     | print_func_statement
+
+    6 function_definition: type ID LB declaration_list RB compound_statement
+    7                    | type ID LB RB compound_statement
+
+    8 type: INT
+    9     | FLOAT
+   10     | BOOL
+   11     | STRING
+   12     | VOID
+
+   13 declaration_list: declaration_list COMMA d_l_t
+   14                 | d_l_t
+
+   15 d_l_t: type ID
+
+   16 compound_statement: LCB RCB
+   17                   | LCB block_item_list RCB
+
+   18 block_item_list: block_item
+   19                | block_item_list block_item
+
+   20 block_item: internal_declaration
+   21           | statement
+
+   22 internal_declaration: type ID ASGN expression SEMICOLON
+   23                     | type ID SEMICOLON
+
+   24 declaration: type ID ASGN expression SEMICOLON
+   25            | type ID SEMICOLON
+
+   26 statement: compound_statement
+   27          | expression_statement
+   28          | selection_statement
+   29          | iteration_statement
+   30          | jump_statement
+   31          | print_func_statement
+
+   32 print_func_statement: PRINT LB S_CONST RB
+   33                     | PRINT LB ID RB
+
+   34 expression_statement: expression SEMICOLON
+   35                     | SEMICOLON
+
+   36 expression: assignment_expression
+   37           | expression COMMA assignment_expression
+
+   38 assignment_expression: conditional_expression
+   39                      | unary_expression assignment_operator assignment_expression
+
+   40 assignment_operator: ASGN
+   41                    | MULASGN
+   42                    | DIVASGN
+   43                    | MODASGN
+   44                    | ADDASGN
+   45                    | SUBASGN
+
+   46 unary_expression: postfix_expression
+   47                 | INC unary_expression
+   48                 | DEC unary_expression
+
+   49 postfix_expression: primary_expression
+   50                   | postfix_expression LSB expression RSB
+   51                   | postfix_expression LB RB
+   52                   | postfix_expression LB argument_expression_list RB
+   53                   | postfix_expression INC
+   54                   | postfix_expression DEC
+
+   55 primary_expression: ID
+   56                   | constant
+
+   57 constant: I_CONST
+   58         | SUB I_CONST
+   59         | F_CONST
+   60         | SUB F_CONST
+   61         | S_CONST
+   62         | TRUE
+   63         | FALSE
+
+   64 argument_expression_list: assignment_expression
+   65                         | argument_expression_list COMMA assignment_expression
+
+   66 conditional_expression: logical_or_expression
+   67                       | logical_or_expression '?' expression ':' conditional_expression
+
+   68 logical_or_expression: logical_and_expression
+   69                      | logical_or_expression OR logical_and_expression
+
+   70 logical_and_expression: inclusive_or_expression
+   71                       | logical_and_expression AND inclusive_or_expression
+
+   72 inclusive_or_expression: exclusive_or_expression
+   73                        | inclusive_or_expression '|' exclusive_or_expression
+
+   74 exclusive_or_expression: and_expression
+   75                        | exclusive_or_expression '^' and_expression
+
+   76 and_expression: equality_expression
+   77               | and_expression '&' equality_expression
+
+   78 equality_expression: relational_expression
+   79                    | equality_expression EQ relational_expression
+   80                    | equality_expression NE relational_expression
+
+   81 relational_expression: additive_expression
+   82                      | relational_expression LT additive_expression
+   83                      | relational_expression MT additive_expression
+   84                      | relational_expression LTE additive_expression
+   85                      | relational_expression MTE additive_expression
+   86                      | relational_expression EQ additive_expression
+   87                      | relational_expression NE additive_expression
+
+   88 additive_expression: multiplicative_expression
+   89                    | additive_expression ADD multiplicative_expression
+   90                    | additive_expression SUB multiplicative_expression
+
+   91 multiplicative_expression: unary_expression
+   92                          | multiplicative_expression MUL unary_expression
+   93                          | multiplicative_expression DIV unary_expression
+   94                          | multiplicative_expression MOD unary_expression
+
+   95 selection_statement: IF LB expression RB statement ELSE statement
+   96                    | IF LB expression RB statement
+
+   97 iteration_statement: WHILE LB expression RB statement
+
+   98 jump_statement: RET SEMICOLON
+   99               | RET expression SEMICOLON
+
+
+終結語詞，附有它們出現處的規則
+
+$end (0) 0
+'&' (38) 77
+':' (58) 67
+'?' (63) 67
+'^' (94) 75
+'|' (124) 73
+error (256)
+ADD (258) 89
+SUB (259) 58 60 90
+MUL (260) 92
+DIV (261) 93
+MOD (262) 94
+INC (263) 47 53
+DEC (264) 48 54
+MT (265) 83
+LT (266) 82
+MTE (267) 85
+LTE (268) 84
+EQ (269) 79 86
+NE (270) 80 87
+ASGN (271) 22 24 40
+ADDASGN (272) 44
+SUBASGN (273) 45
+MULASGN (274) 41
+DIVASGN (275) 42
+MODASGN (276) 43
+AND (277) 71
+OR (278) 69
+NOT (279)
+LB (280) 6 7 32 33 51 52 95 96 97
+RB (281) 6 7 32 33 51 52 95 96 97
+LCB (282) 16 17
+RCB (283) 16 17
+LSB (284) 50
+RSB (285) 50
+COMMA (286) 13 37 65
+PRINT (287) 32 33
+IF (288) 95 96
+ELSE (289) 95
+FOR (290)
+WHILE (291) 97
+TRUE (292) 62
+FALSE (293) 63
+RET (294) 98 99
+SEMICOLON (295) 22 23 24 25 34 35 98 99
+I_CONST (296) 57 58
+F_CONST (297) 59 60
+S_CONST (298) 32 61
+ID (299) 6 7 15 22 23 24 25 33 55
+BOOL (300) 10
+INT (301) 8
+STRING (302) 11
+FLOAT (303) 9
+VOID (304) 12
+
+
+非終結語詞，附有它們出現處的規則
+
+$accept (55)
+    於左側： 0
+program (56)
+    於左側： 1 2, 於右側： 0 2
+stat (57)
+    於左側： 3 4 5, 於右側： 1 2
+function_definition (58)
+    於左側： 6 7, 於右側： 3
+type (59)
+    於左側： 8 9 10 11 12, 於右側： 6 7 15 22 23 24 25
+declaration_list (60)
+    於左側： 13 14, 於右側： 6 13
+d_l_t (61)
+    於左側： 15, 於右側： 13 14
+compound_statement (62)
+    於左側： 16 17, 於右側： 6 7 26
+block_item_list (63)
+    於左側： 18 19, 於右側： 17 19
+block_item (64)
+    於左側： 20 21, 於右側： 18 19
+internal_declaration (65)
+    於左側： 22 23, 於右側： 20
+declaration (66)
+    於左側： 24 25, 於右側： 4
+statement (67)
+    於左側： 26 27 28 29 30 31, 於右側： 21 95 96 97
+print_func_statement (68)
+    於左側： 32 33, 於右側： 5 31
+expression_statement (69)
+    於左側： 34 35, 於右側： 27
+expression (70)
+    於左側： 36 37, 於右側： 22 24 34 37 50 67 95 96 97 99
+assignment_expression (71)
+    於左側： 38 39, 於右側： 36 37 39 64 65
+assignment_operator (72)
+    於左側： 40 41 42 43 44 45, 於右側： 39
+unary_expression (73)
+    於左側： 46 47 48, 於右側： 39 47 48 91 92 93 94
+postfix_expression (74)
+    於左側： 49 50 51 52 53 54, 於右側： 46 50 51 52 53 54
+primary_expression (75)
+    於左側： 55 56, 於右側： 49
+constant (76)
+    於左側： 57 58 59 60 61 62 63, 於右側： 56
+argument_expression_list (77)
+    於左側： 64 65, 於右側： 52 65
+conditional_expression (78)
+    於左側： 66 67, 於右側： 38 67
+logical_or_expression (79)
+    於左側： 68 69, 於右側： 66 67 69
+logical_and_expression (80)
+    於左側： 70 71, 於右側： 68 69 71
+inclusive_or_expression (81)
+    於左側： 72 73, 於右側： 70 71 73
+exclusive_or_expression (82)
+    於左側： 74 75, 於右側： 72 73 75
+and_expression (83)
+    於左側： 76 77, 於右側： 74 75 77
+equality_expression (84)
+    於左側： 78 79 80, 於右側： 76 77 79 80
+relational_expression (85)
+    於左側： 81 82 83 84 85 86 87, 於右側： 78 79 80 82 83
+    84 85 86 87
+additive_expression (86)
+    於左側： 88 89 90, 於右側： 81 82 83 84 85 86 87 89 90
+multiplicative_expression (87)
+    於左側： 91 92 93 94, 於右側： 88 89 90 92 93 94
+selection_statement (88)
+    於左側： 95 96, 於右側： 28
+iteration_statement (89)
+    於左側： 97, 於右側： 29
+jump_statement (90)
+    於左側： 98 99, 於右側： 30
+
+
+狀態 0
+
+    0 $accept: . program $end
+
+    PRINT   偏移，並進入狀態 1
+    BOOL    偏移，並進入狀態 2
+    INT     偏移，並進入狀態 3
+    STRING  偏移，並進入狀態 4
+    FLOAT   偏移，並進入狀態 5
+    VOID    偏移，並進入狀態 6
+
+    program               進入狀態 7
+    stat                  進入狀態 8
+    function_definition   進入狀態 9
+    type                  進入狀態 10
+    declaration           進入狀態 11
+    print_func_statement  進入狀態 12
+
+
+狀態 1
+
+   32 print_func_statement: PRINT . LB S_CONST RB
+   33                     | PRINT . LB ID RB
+
+    LB  偏移，並進入狀態 13
+
+
+狀態 2
+
+   10 type: BOOL .
+
+    $預設  使用規則 10 以縮減 (type)
+
+
+狀態 3
+
+    8 type: INT .
+
+    $預設  使用規則 8 以縮減 (type)
+
+
+狀態 4
+
+   11 type: STRING .
+
+    $預設  使用規則 11 以縮減 (type)
+
+
+狀態 5
+
+    9 type: FLOAT .
+
+    $預設  使用規則 9 以縮減 (type)
+
+
+狀態 6
+
+   12 type: VOID .
+
+    $預設  使用規則 12 以縮減 (type)
+
+
+狀態 7
+
+    0 $accept: program . $end
+    2 program: program . stat
+
+    $end    偏移，並進入狀態 14
+    PRINT   偏移，並進入狀態 1
+    BOOL    偏移，並進入狀態 2
+    INT     偏移，並進入狀態 3
+    STRING  偏移，並進入狀態 4
+    FLOAT   偏移，並進入狀態 5
+    VOID    偏移，並進入狀態 6
+
+    stat                  進入狀態 15
+    function_definition   進入狀態 9
+    type                  進入狀態 10
+    declaration           進入狀態 11
+    print_func_statement  進入狀態 12
+
+
+狀態 8
+
+    1 program: stat .
+
+    $預設  使用規則 1 以縮減 (program)
+
+
+狀態 9
+
+    3 stat: function_definition .
+
+    $預設  使用規則 3 以縮減 (stat)
+
+
+狀態 10
+
+    6 function_definition: type . ID LB declaration_list RB compound_statement
+    7                    | type . ID LB RB compound_statement
+   24 declaration: type . ID ASGN expression SEMICOLON
+   25            | type . ID SEMICOLON
+
+    ID  偏移，並進入狀態 16
+
+
+狀態 11
+
+    4 stat: declaration .
+
+    $預設  使用規則 4 以縮減 (stat)
+
+
+狀態 12
+
+    5 stat: print_func_statement .
+
+    $預設  使用規則 5 以縮減 (stat)
+
+
+狀態 13
+
+   32 print_func_statement: PRINT LB . S_CONST RB
+   33                     | PRINT LB . ID RB
+
+    S_CONST  偏移，並進入狀態 17
+    ID       偏移，並進入狀態 18
+
+
+狀態 14
+
+    0 $accept: program $end .
+
+    $預設  接受
+
+
+狀態 15
+
+    2 program: program stat .
+
+    $預設  使用規則 2 以縮減 (program)
+
+
+狀態 16
+
+    6 function_definition: type ID . LB declaration_list RB compound_statement
+    7                    | type ID . LB RB compound_statement
+   24 declaration: type ID . ASGN expression SEMICOLON
+   25            | type ID . SEMICOLON
+
+    ASGN       偏移，並進入狀態 19
+    LB         偏移，並進入狀態 20
+    SEMICOLON  偏移，並進入狀態 21
+
+
+狀態 17
+
+   32 print_func_statement: PRINT LB S_CONST . RB
+
+    RB  偏移，並進入狀態 22
+
+
+狀態 18
+
+   33 print_func_statement: PRINT LB ID . RB
+
+    RB  偏移，並進入狀態 23
+
+
+狀態 19
+
+   24 declaration: type ID ASGN . expression SEMICOLON
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    expression                 進入狀態 33
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 20
+
+    6 function_definition: type ID LB . declaration_list RB compound_statement
+    7                    | type ID LB . RB compound_statement
+
+    RB      偏移，並進入狀態 49
+    BOOL    偏移，並進入狀態 2
+    INT     偏移，並進入狀態 3
+    STRING  偏移，並進入狀態 4
+    FLOAT   偏移，並進入狀態 5
+    VOID    偏移，並進入狀態 6
+
+    type              進入狀態 50
+    declaration_list  進入狀態 51
+    d_l_t             進入狀態 52
+
+
+狀態 21
+
+   25 declaration: type ID SEMICOLON .
+
+    $預設  使用規則 25 以縮減 (declaration)
+
+
+狀態 22
+
+   32 print_func_statement: PRINT LB S_CONST RB .
+
+    $預設  使用規則 32 以縮減 (print_func_statement)
+
+
+狀態 23
+
+   33 print_func_statement: PRINT LB ID RB .
+
+    $預設  使用規則 33 以縮減 (print_func_statement)
+
+
+狀態 24
+
+   58 constant: SUB . I_CONST
+   60         | SUB . F_CONST
+
+    I_CONST  偏移，並進入狀態 53
+    F_CONST  偏移，並進入狀態 54
+
+
+狀態 25
+
+   47 unary_expression: INC . unary_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression    進入狀態 55
+    postfix_expression  進入狀態 36
+    primary_expression  進入狀態 37
+    constant            進入狀態 38
+
+
+狀態 26
+
+   48 unary_expression: DEC . unary_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression    進入狀態 56
+    postfix_expression  進入狀態 36
+    primary_expression  進入狀態 37
+    constant            進入狀態 38
+
+
+狀態 27
+
+   62 constant: TRUE .
+
+    $預設  使用規則 62 以縮減 (constant)
+
+
+狀態 28
+
+   63 constant: FALSE .
+
+    $預設  使用規則 63 以縮減 (constant)
+
+
+狀態 29
+
+   57 constant: I_CONST .
+
+    $預設  使用規則 57 以縮減 (constant)
+
+
+狀態 30
+
+   59 constant: F_CONST .
+
+    $預設  使用規則 59 以縮減 (constant)
+
+
+狀態 31
+
+   61 constant: S_CONST .
+
+    $預設  使用規則 61 以縮減 (constant)
+
+
+狀態 32
+
+   55 primary_expression: ID .
+
+    $預設  使用規則 55 以縮減 (primary_expression)
+
+
+狀態 33
+
+   24 declaration: type ID ASGN expression . SEMICOLON
+   37 expression: expression . COMMA assignment_expression
+
+    COMMA      偏移，並進入狀態 57
+    SEMICOLON  偏移，並進入狀態 58
+
+
+狀態 34
+
+   36 expression: assignment_expression .
+
+    $預設  使用規則 36 以縮減 (expression)
+
+
+狀態 35
+
+   39 assignment_expression: unary_expression . assignment_operator assignment_expression
+   91 multiplicative_expression: unary_expression .
+
+    ASGN     偏移，並進入狀態 59
+    ADDASGN  偏移，並進入狀態 60
+    SUBASGN  偏移，並進入狀態 61
+    MULASGN  偏移，並進入狀態 62
+    DIVASGN  偏移，並進入狀態 63
+    MODASGN  偏移，並進入狀態 64
+
+    $預設  使用規則 91 以縮減 (multiplicative_expression)
+
+    assignment_operator  進入狀態 65
+
+
+狀態 36
+
+   46 unary_expression: postfix_expression .
+   50 postfix_expression: postfix_expression . LSB expression RSB
+   51                   | postfix_expression . LB RB
+   52                   | postfix_expression . LB argument_expression_list RB
+   53                   | postfix_expression . INC
+   54                   | postfix_expression . DEC
+
+    INC  偏移，並進入狀態 66
+    DEC  偏移，並進入狀態 67
+    LB   偏移，並進入狀態 68
+    LSB  偏移，並進入狀態 69
+
+    $預設  使用規則 46 以縮減 (unary_expression)
+
+
+狀態 37
+
+   49 postfix_expression: primary_expression .
+
+    $預設  使用規則 49 以縮減 (postfix_expression)
+
+
+狀態 38
+
+   56 primary_expression: constant .
+
+    $預設  使用規則 56 以縮減 (primary_expression)
+
+
+狀態 39
+
+   38 assignment_expression: conditional_expression .
+
+    $預設  使用規則 38 以縮減 (assignment_expression)
+
+
+狀態 40
+
+   66 conditional_expression: logical_or_expression .
+   67                       | logical_or_expression . '?' expression ':' conditional_expression
+   69 logical_or_expression: logical_or_expression . OR logical_and_expression
+
+    OR   偏移，並進入狀態 70
+    '?'  偏移，並進入狀態 71
+
+    $預設  使用規則 66 以縮減 (conditional_expression)
+
+
+狀態 41
+
+   68 logical_or_expression: logical_and_expression .
+   71 logical_and_expression: logical_and_expression . AND inclusive_or_expression
+
+    AND  偏移，並進入狀態 72
+
+    $預設  使用規則 68 以縮減 (logical_or_expression)
+
+
+狀態 42
+
+   70 logical_and_expression: inclusive_or_expression .
+   73 inclusive_or_expression: inclusive_or_expression . '|' exclusive_or_expression
+
+    '|'  偏移，並進入狀態 73
+
+    $預設  使用規則 70 以縮減 (logical_and_expression)
+
+
+狀態 43
+
+   72 inclusive_or_expression: exclusive_or_expression .
+   75 exclusive_or_expression: exclusive_or_expression . '^' and_expression
+
+    '^'  偏移，並進入狀態 74
+
+    $預設  使用規則 72 以縮減 (inclusive_or_expression)
+
+
+狀態 44
+
+   74 exclusive_or_expression: and_expression .
+   77 and_expression: and_expression . '&' equality_expression
+
+    '&'  偏移，並進入狀態 75
+
+    $預設  使用規則 74 以縮減 (exclusive_or_expression)
+
+
+狀態 45
+
+   76 and_expression: equality_expression .
+   79 equality_expression: equality_expression . EQ relational_expression
+   80                    | equality_expression . NE relational_expression
+
+    EQ  偏移，並進入狀態 76
+    NE  偏移，並進入狀態 77
+
+    $預設  使用規則 76 以縮減 (and_expression)
+
+
+狀態 46
+
+   78 equality_expression: relational_expression .
+   82 relational_expression: relational_expression . LT additive_expression
+   83                      | relational_expression . MT additive_expression
+   84                      | relational_expression . LTE additive_expression
+   85                      | relational_expression . MTE additive_expression
+   86                      | relational_expression . EQ additive_expression
+   87                      | relational_expression . NE additive_expression
+
+    MT   偏移，並進入狀態 78
+    LT   偏移，並進入狀態 79
+    MTE  偏移，並進入狀態 80
+    LTE  偏移，並進入狀態 81
+    EQ   偏移，並進入狀態 82
+    NE   偏移，並進入狀態 83
+
+    EQ       [使用規則 78 以縮減 (equality_expression)]
+    NE       [使用規則 78 以縮減 (equality_expression)]
+    $預設  使用規則 78 以縮減 (equality_expression)
+
+
+狀態 47
+
+   81 relational_expression: additive_expression .
+   89 additive_expression: additive_expression . ADD multiplicative_expression
+   90                    | additive_expression . SUB multiplicative_expression
+
+    ADD  偏移，並進入狀態 84
+    SUB  偏移，並進入狀態 85
+
+    $預設  使用規則 81 以縮減 (relational_expression)
+
+
+狀態 48
+
+   88 additive_expression: multiplicative_expression .
+   92 multiplicative_expression: multiplicative_expression . MUL unary_expression
+   93                          | multiplicative_expression . DIV unary_expression
+   94                          | multiplicative_expression . MOD unary_expression
+
+    MUL  偏移，並進入狀態 86
+    DIV  偏移，並進入狀態 87
+    MOD  偏移，並進入狀態 88
+
+    $預設  使用規則 88 以縮減 (additive_expression)
+
+
+狀態 49
+
+    7 function_definition: type ID LB RB . compound_statement
+
+    LCB  偏移，並進入狀態 89
+
+    compound_statement  進入狀態 90
+
+
+狀態 50
+
+   15 d_l_t: type . ID
+
+    ID  偏移，並進入狀態 91
+
+
+狀態 51
+
+    6 function_definition: type ID LB declaration_list . RB compound_statement
+   13 declaration_list: declaration_list . COMMA d_l_t
+
+    RB     偏移，並進入狀態 92
+    COMMA  偏移，並進入狀態 93
+
+
+狀態 52
+
+   14 declaration_list: d_l_t .
+
+    $預設  使用規則 14 以縮減 (declaration_list)
+
+
+狀態 53
+
+   58 constant: SUB I_CONST .
+
+    $預設  使用規則 58 以縮減 (constant)
+
+
+狀態 54
+
+   60 constant: SUB F_CONST .
+
+    $預設  使用規則 60 以縮減 (constant)
+
+
+狀態 55
+
+   47 unary_expression: INC unary_expression .
+
+    $預設  使用規則 47 以縮減 (unary_expression)
+
+
+狀態 56
+
+   48 unary_expression: DEC unary_expression .
+
+    $預設  使用規則 48 以縮減 (unary_expression)
+
+
+狀態 57
+
+   37 expression: expression COMMA . assignment_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    assignment_expression      進入狀態 94
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 58
+
+   24 declaration: type ID ASGN expression SEMICOLON .
+
+    $預設  使用規則 24 以縮減 (declaration)
+
+
+狀態 59
+
+   40 assignment_operator: ASGN .
+
+    $預設  使用規則 40 以縮減 (assignment_operator)
+
+
+狀態 60
+
+   44 assignment_operator: ADDASGN .
+
+    $預設  使用規則 44 以縮減 (assignment_operator)
+
+
+狀態 61
+
+   45 assignment_operator: SUBASGN .
+
+    $預設  使用規則 45 以縮減 (assignment_operator)
+
+
+狀態 62
+
+   41 assignment_operator: MULASGN .
+
+    $預設  使用規則 41 以縮減 (assignment_operator)
+
+
+狀態 63
+
+   42 assignment_operator: DIVASGN .
+
+    $預設  使用規則 42 以縮減 (assignment_operator)
+
+
+狀態 64
+
+   43 assignment_operator: MODASGN .
+
+    $預設  使用規則 43 以縮減 (assignment_operator)
+
+
+狀態 65
+
+   39 assignment_expression: unary_expression assignment_operator . assignment_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    assignment_expression      進入狀態 95
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 66
+
+   53 postfix_expression: postfix_expression INC .
+
+    $預設  使用規則 53 以縮減 (postfix_expression)
+
+
+狀態 67
+
+   54 postfix_expression: postfix_expression DEC .
+
+    $預設  使用規則 54 以縮減 (postfix_expression)
+
+
+狀態 68
+
+   51 postfix_expression: postfix_expression LB . RB
+   52                   | postfix_expression LB . argument_expression_list RB
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    RB       偏移，並進入狀態 96
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    assignment_expression      進入狀態 97
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    argument_expression_list   進入狀態 98
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 69
+
+   50 postfix_expression: postfix_expression LSB . expression RSB
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    expression                 進入狀態 99
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 70
+
+   69 logical_or_expression: logical_or_expression OR . logical_and_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    logical_and_expression     進入狀態 101
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 71
+
+   67 conditional_expression: logical_or_expression '?' . expression ':' conditional_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    expression                 進入狀態 102
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 72
+
+   71 logical_and_expression: logical_and_expression AND . inclusive_or_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    inclusive_or_expression    進入狀態 103
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 73
+
+   73 inclusive_or_expression: inclusive_or_expression '|' . exclusive_or_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    exclusive_or_expression    進入狀態 104
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 74
+
+   75 exclusive_or_expression: exclusive_or_expression '^' . and_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    and_expression             進入狀態 105
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 75
+
+   77 and_expression: and_expression '&' . equality_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    equality_expression        進入狀態 106
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 76
+
+   79 equality_expression: equality_expression EQ . relational_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    relational_expression      進入狀態 107
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 77
+
+   80 equality_expression: equality_expression NE . relational_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    relational_expression      進入狀態 108
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 78
+
+   83 relational_expression: relational_expression MT . additive_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    additive_expression        進入狀態 109
+    multiplicative_expression  進入狀態 48
+
+
+狀態 79
+
+   82 relational_expression: relational_expression LT . additive_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    additive_expression        進入狀態 110
+    multiplicative_expression  進入狀態 48
+
+
+狀態 80
+
+   85 relational_expression: relational_expression MTE . additive_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    additive_expression        進入狀態 111
+    multiplicative_expression  進入狀態 48
+
+
+狀態 81
+
+   84 relational_expression: relational_expression LTE . additive_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    additive_expression        進入狀態 112
+    multiplicative_expression  進入狀態 48
+
+
+狀態 82
+
+   86 relational_expression: relational_expression EQ . additive_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    additive_expression        進入狀態 113
+    multiplicative_expression  進入狀態 48
+
+
+狀態 83
+
+   87 relational_expression: relational_expression NE . additive_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    additive_expression        進入狀態 114
+    multiplicative_expression  進入狀態 48
+
+
+狀態 84
+
+   89 additive_expression: additive_expression ADD . multiplicative_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    multiplicative_expression  進入狀態 115
+
+
+狀態 85
+
+   90 additive_expression: additive_expression SUB . multiplicative_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    multiplicative_expression  進入狀態 116
+
+
+狀態 86
+
+   92 multiplicative_expression: multiplicative_expression MUL . unary_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression    進入狀態 117
+    postfix_expression  進入狀態 36
+    primary_expression  進入狀態 37
+    constant            進入狀態 38
+
+
+狀態 87
+
+   93 multiplicative_expression: multiplicative_expression DIV . unary_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression    進入狀態 118
+    postfix_expression  進入狀態 36
+    primary_expression  進入狀態 37
+    constant            進入狀態 38
+
+
+狀態 88
+
+   94 multiplicative_expression: multiplicative_expression MOD . unary_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression    進入狀態 119
+    postfix_expression  進入狀態 36
+    primary_expression  進入狀態 37
+    constant            進入狀態 38
+
+
+狀態 89
+
+   16 compound_statement: LCB . RCB
+   17                   | LCB . block_item_list RCB
+
+    SUB        偏移，並進入狀態 24
+    INC        偏移，並進入狀態 25
+    DEC        偏移，並進入狀態 26
+    LCB        偏移，並進入狀態 89
+    RCB        偏移，並進入狀態 120
+    PRINT      偏移，並進入狀態 1
+    IF         偏移，並進入狀態 121
+    WHILE      偏移，並進入狀態 122
+    TRUE       偏移，並進入狀態 27
+    FALSE      偏移，並進入狀態 28
+    RET        偏移，並進入狀態 123
+    SEMICOLON  偏移，並進入狀態 124
+    I_CONST    偏移，並進入狀態 29
+    F_CONST    偏移，並進入狀態 30
+    S_CONST    偏移，並進入狀態 31
+    ID         偏移，並進入狀態 32
+    BOOL       偏移，並進入狀態 2
+    INT        偏移，並進入狀態 3
+    STRING     偏移，並進入狀態 4
+    FLOAT      偏移，並進入狀態 5
+    VOID       偏移，並進入狀態 6
+
+    type                       進入狀態 125
+    compound_statement         進入狀態 126
+    block_item_list            進入狀態 127
+    block_item                 進入狀態 128
+    internal_declaration       進入狀態 129
+    statement                  進入狀態 130
+    print_func_statement       進入狀態 131
+    expression_statement       進入狀態 132
+    expression                 進入狀態 133
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+    selection_statement        進入狀態 134
+    iteration_statement        進入狀態 135
+    jump_statement             進入狀態 136
+
+
+狀態 90
+
+    7 function_definition: type ID LB RB compound_statement .
+
+    $預設  使用規則 7 以縮減 (function_definition)
+
+
+狀態 91
+
+   15 d_l_t: type ID .
+
+    $預設  使用規則 15 以縮減 (d_l_t)
+
+
+狀態 92
+
+    6 function_definition: type ID LB declaration_list RB . compound_statement
+
+    LCB  偏移，並進入狀態 89
+
+    compound_statement  進入狀態 137
+
+
+狀態 93
+
+   13 declaration_list: declaration_list COMMA . d_l_t
+
+    BOOL    偏移，並進入狀態 2
+    INT     偏移，並進入狀態 3
+    STRING  偏移，並進入狀態 4
+    FLOAT   偏移，並進入狀態 5
+    VOID    偏移，並進入狀態 6
+
+    type   進入狀態 50
+    d_l_t  進入狀態 138
+
+
+狀態 94
+
+   37 expression: expression COMMA assignment_expression .
+
+    $預設  使用規則 37 以縮減 (expression)
+
+
+狀態 95
+
+   39 assignment_expression: unary_expression assignment_operator assignment_expression .
+
+    $預設  使用規則 39 以縮減 (assignment_expression)
+
+
+狀態 96
+
+   51 postfix_expression: postfix_expression LB RB .
+
+    $預設  使用規則 51 以縮減 (postfix_expression)
+
+
+狀態 97
+
+   64 argument_expression_list: assignment_expression .
+
+    $預設  使用規則 64 以縮減 (argument_expression_list)
+
+
+狀態 98
+
+   52 postfix_expression: postfix_expression LB argument_expression_list . RB
+   65 argument_expression_list: argument_expression_list . COMMA assignment_expression
+
+    RB     偏移，並進入狀態 139
+    COMMA  偏移，並進入狀態 140
+
+
+狀態 99
+
+   37 expression: expression . COMMA assignment_expression
+   50 postfix_expression: postfix_expression LSB expression . RSB
+
+    RSB    偏移，並進入狀態 141
+    COMMA  偏移，並進入狀態 57
+
+
+狀態 100
+
+   91 multiplicative_expression: unary_expression .
+
+    $預設  使用規則 91 以縮減 (multiplicative_expression)
+
+
+狀態 101
+
+   69 logical_or_expression: logical_or_expression OR logical_and_expression .
+   71 logical_and_expression: logical_and_expression . AND inclusive_or_expression
+
+    AND  偏移，並進入狀態 72
+
+    $預設  使用規則 69 以縮減 (logical_or_expression)
+
+
+狀態 102
+
+   37 expression: expression . COMMA assignment_expression
+   67 conditional_expression: logical_or_expression '?' expression . ':' conditional_expression
+
+    COMMA  偏移，並進入狀態 57
+    ':'    偏移，並進入狀態 142
+
+
+狀態 103
+
+   71 logical_and_expression: logical_and_expression AND inclusive_or_expression .
+   73 inclusive_or_expression: inclusive_or_expression . '|' exclusive_or_expression
+
+    '|'  偏移，並進入狀態 73
+
+    $預設  使用規則 71 以縮減 (logical_and_expression)
+
+
+狀態 104
+
+   73 inclusive_or_expression: inclusive_or_expression '|' exclusive_or_expression .
+   75 exclusive_or_expression: exclusive_or_expression . '^' and_expression
+
+    '^'  偏移，並進入狀態 74
+
+    $預設  使用規則 73 以縮減 (inclusive_or_expression)
+
+
+狀態 105
+
+   75 exclusive_or_expression: exclusive_or_expression '^' and_expression .
+   77 and_expression: and_expression . '&' equality_expression
+
+    '&'  偏移，並進入狀態 75
+
+    $預設  使用規則 75 以縮減 (exclusive_or_expression)
+
+
+狀態 106
+
+   77 and_expression: and_expression '&' equality_expression .
+   79 equality_expression: equality_expression . EQ relational_expression
+   80                    | equality_expression . NE relational_expression
+
+    EQ  偏移，並進入狀態 76
+    NE  偏移，並進入狀態 77
+
+    $預設  使用規則 77 以縮減 (and_expression)
+
+
+狀態 107
+
+   79 equality_expression: equality_expression EQ relational_expression .
+   82 relational_expression: relational_expression . LT additive_expression
+   83                      | relational_expression . MT additive_expression
+   84                      | relational_expression . LTE additive_expression
+   85                      | relational_expression . MTE additive_expression
+   86                      | relational_expression . EQ additive_expression
+   87                      | relational_expression . NE additive_expression
+
+    MT   偏移，並進入狀態 78
+    LT   偏移，並進入狀態 79
+    MTE  偏移，並進入狀態 80
+    LTE  偏移，並進入狀態 81
+    EQ   偏移，並進入狀態 82
+    NE   偏移，並進入狀態 83
+
+    EQ       [使用規則 79 以縮減 (equality_expression)]
+    NE       [使用規則 79 以縮減 (equality_expression)]
+    $預設  使用規則 79 以縮減 (equality_expression)
+
+
+狀態 108
+
+   80 equality_expression: equality_expression NE relational_expression .
+   82 relational_expression: relational_expression . LT additive_expression
+   83                      | relational_expression . MT additive_expression
+   84                      | relational_expression . LTE additive_expression
+   85                      | relational_expression . MTE additive_expression
+   86                      | relational_expression . EQ additive_expression
+   87                      | relational_expression . NE additive_expression
+
+    MT   偏移，並進入狀態 78
+    LT   偏移，並進入狀態 79
+    MTE  偏移，並進入狀態 80
+    LTE  偏移，並進入狀態 81
+    EQ   偏移，並進入狀態 82
+    NE   偏移，並進入狀態 83
+
+    EQ       [使用規則 80 以縮減 (equality_expression)]
+    NE       [使用規則 80 以縮減 (equality_expression)]
+    $預設  使用規則 80 以縮減 (equality_expression)
+
+
+狀態 109
+
+   83 relational_expression: relational_expression MT additive_expression .
+   89 additive_expression: additive_expression . ADD multiplicative_expression
+   90                    | additive_expression . SUB multiplicative_expression
+
+    ADD  偏移，並進入狀態 84
+    SUB  偏移，並進入狀態 85
+
+    $預設  使用規則 83 以縮減 (relational_expression)
+
+
+狀態 110
+
+   82 relational_expression: relational_expression LT additive_expression .
+   89 additive_expression: additive_expression . ADD multiplicative_expression
+   90                    | additive_expression . SUB multiplicative_expression
+
+    ADD  偏移，並進入狀態 84
+    SUB  偏移，並進入狀態 85
+
+    $預設  使用規則 82 以縮減 (relational_expression)
+
+
+狀態 111
+
+   85 relational_expression: relational_expression MTE additive_expression .
+   89 additive_expression: additive_expression . ADD multiplicative_expression
+   90                    | additive_expression . SUB multiplicative_expression
+
+    ADD  偏移，並進入狀態 84
+    SUB  偏移，並進入狀態 85
+
+    $預設  使用規則 85 以縮減 (relational_expression)
+
+
+狀態 112
+
+   84 relational_expression: relational_expression LTE additive_expression .
+   89 additive_expression: additive_expression . ADD multiplicative_expression
+   90                    | additive_expression . SUB multiplicative_expression
+
+    ADD  偏移，並進入狀態 84
+    SUB  偏移，並進入狀態 85
+
+    $預設  使用規則 84 以縮減 (relational_expression)
+
+
+狀態 113
+
+   86 relational_expression: relational_expression EQ additive_expression .
+   89 additive_expression: additive_expression . ADD multiplicative_expression
+   90                    | additive_expression . SUB multiplicative_expression
+
+    ADD  偏移，並進入狀態 84
+    SUB  偏移，並進入狀態 85
+
+    $預設  使用規則 86 以縮減 (relational_expression)
+
+
+狀態 114
+
+   87 relational_expression: relational_expression NE additive_expression .
+   89 additive_expression: additive_expression . ADD multiplicative_expression
+   90                    | additive_expression . SUB multiplicative_expression
+
+    ADD  偏移，並進入狀態 84
+    SUB  偏移，並進入狀態 85
+
+    $預設  使用規則 87 以縮減 (relational_expression)
+
+
+狀態 115
+
+   89 additive_expression: additive_expression ADD multiplicative_expression .
+   92 multiplicative_expression: multiplicative_expression . MUL unary_expression
+   93                          | multiplicative_expression . DIV unary_expression
+   94                          | multiplicative_expression . MOD unary_expression
+
+    MUL  偏移，並進入狀態 86
+    DIV  偏移，並進入狀態 87
+    MOD  偏移，並進入狀態 88
+
+    $預設  使用規則 89 以縮減 (additive_expression)
+
+
+狀態 116
+
+   90 additive_expression: additive_expression SUB multiplicative_expression .
+   92 multiplicative_expression: multiplicative_expression . MUL unary_expression
+   93                          | multiplicative_expression . DIV unary_expression
+   94                          | multiplicative_expression . MOD unary_expression
+
+    MUL  偏移，並進入狀態 86
+    DIV  偏移，並進入狀態 87
+    MOD  偏移，並進入狀態 88
+
+    $預設  使用規則 90 以縮減 (additive_expression)
+
+
+狀態 117
+
+   92 multiplicative_expression: multiplicative_expression MUL unary_expression .
+
+    $預設  使用規則 92 以縮減 (multiplicative_expression)
+
+
+狀態 118
+
+   93 multiplicative_expression: multiplicative_expression DIV unary_expression .
+
+    $預設  使用規則 93 以縮減 (multiplicative_expression)
+
+
+狀態 119
+
+   94 multiplicative_expression: multiplicative_expression MOD unary_expression .
+
+    $預設  使用規則 94 以縮減 (multiplicative_expression)
+
+
+狀態 120
+
+   16 compound_statement: LCB RCB .
+
+    $預設  使用規則 16 以縮減 (compound_statement)
+
+
+狀態 121
+
+   95 selection_statement: IF . LB expression RB statement ELSE statement
+   96                    | IF . LB expression RB statement
+
+    LB  偏移，並進入狀態 143
+
+
+狀態 122
+
+   97 iteration_statement: WHILE . LB expression RB statement
+
+    LB  偏移，並進入狀態 144
+
+
+狀態 123
+
+   98 jump_statement: RET . SEMICOLON
+   99               | RET . expression SEMICOLON
+
+    SUB        偏移，並進入狀態 24
+    INC        偏移，並進入狀態 25
+    DEC        偏移，並進入狀態 26
+    TRUE       偏移，並進入狀態 27
+    FALSE      偏移，並進入狀態 28
+    SEMICOLON  偏移，並進入狀態 145
+    I_CONST    偏移，並進入狀態 29
+    F_CONST    偏移，並進入狀態 30
+    S_CONST    偏移，並進入狀態 31
+    ID         偏移，並進入狀態 32
+
+    expression                 進入狀態 146
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 124
+
+   35 expression_statement: SEMICOLON .
+
+    $預設  使用規則 35 以縮減 (expression_statement)
+
+
+狀態 125
+
+   22 internal_declaration: type . ID ASGN expression SEMICOLON
+   23                     | type . ID SEMICOLON
+
+    ID  偏移，並進入狀態 147
+
+
+狀態 126
+
+   26 statement: compound_statement .
+
+    $預設  使用規則 26 以縮減 (statement)
+
+
+狀態 127
+
+   17 compound_statement: LCB block_item_list . RCB
+   19 block_item_list: block_item_list . block_item
+
+    SUB        偏移，並進入狀態 24
+    INC        偏移，並進入狀態 25
+    DEC        偏移，並進入狀態 26
+    LCB        偏移，並進入狀態 89
+    RCB        偏移，並進入狀態 148
+    PRINT      偏移，並進入狀態 1
+    IF         偏移，並進入狀態 121
+    WHILE      偏移，並進入狀態 122
+    TRUE       偏移，並進入狀態 27
+    FALSE      偏移，並進入狀態 28
+    RET        偏移，並進入狀態 123
+    SEMICOLON  偏移，並進入狀態 124
+    I_CONST    偏移，並進入狀態 29
+    F_CONST    偏移，並進入狀態 30
+    S_CONST    偏移，並進入狀態 31
+    ID         偏移，並進入狀態 32
+    BOOL       偏移，並進入狀態 2
+    INT        偏移，並進入狀態 3
+    STRING     偏移，並進入狀態 4
+    FLOAT      偏移，並進入狀態 5
+    VOID       偏移，並進入狀態 6
+
+    type                       進入狀態 125
+    compound_statement         進入狀態 126
+    block_item                 進入狀態 149
+    internal_declaration       進入狀態 129
+    statement                  進入狀態 130
+    print_func_statement       進入狀態 131
+    expression_statement       進入狀態 132
+    expression                 進入狀態 133
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+    selection_statement        進入狀態 134
+    iteration_statement        進入狀態 135
+    jump_statement             進入狀態 136
+
+
+狀態 128
+
+   18 block_item_list: block_item .
+
+    $預設  使用規則 18 以縮減 (block_item_list)
+
+
+狀態 129
+
+   20 block_item: internal_declaration .
+
+    $預設  使用規則 20 以縮減 (block_item)
+
+
+狀態 130
+
+   21 block_item: statement .
+
+    $預設  使用規則 21 以縮減 (block_item)
+
+
+狀態 131
+
+   31 statement: print_func_statement .
+
+    $預設  使用規則 31 以縮減 (statement)
+
+
+狀態 132
+
+   27 statement: expression_statement .
+
+    $預設  使用規則 27 以縮減 (statement)
+
+
+狀態 133
+
+   34 expression_statement: expression . SEMICOLON
+   37 expression: expression . COMMA assignment_expression
+
+    COMMA      偏移，並進入狀態 57
+    SEMICOLON  偏移，並進入狀態 150
+
+
+狀態 134
+
+   28 statement: selection_statement .
+
+    $預設  使用規則 28 以縮減 (statement)
+
+
+狀態 135
+
+   29 statement: iteration_statement .
+
+    $預設  使用規則 29 以縮減 (statement)
+
+
+狀態 136
+
+   30 statement: jump_statement .
+
+    $預設  使用規則 30 以縮減 (statement)
+
+
+狀態 137
+
+    6 function_definition: type ID LB declaration_list RB compound_statement .
+
+    $預設  使用規則 6 以縮減 (function_definition)
+
+
+狀態 138
+
+   13 declaration_list: declaration_list COMMA d_l_t .
+
+    $預設  使用規則 13 以縮減 (declaration_list)
+
+
+狀態 139
+
+   52 postfix_expression: postfix_expression LB argument_expression_list RB .
+
+    $預設  使用規則 52 以縮減 (postfix_expression)
+
+
+狀態 140
+
+   65 argument_expression_list: argument_expression_list COMMA . assignment_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    assignment_expression      進入狀態 151
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 141
+
+   50 postfix_expression: postfix_expression LSB expression RSB .
+
+    $預設  使用規則 50 以縮減 (postfix_expression)
+
+
+狀態 142
+
+   67 conditional_expression: logical_or_expression '?' expression ':' . conditional_expression
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    unary_expression           進入狀態 100
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 152
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 143
+
+   95 selection_statement: IF LB . expression RB statement ELSE statement
+   96                    | IF LB . expression RB statement
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    expression                 進入狀態 153
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 144
+
+   97 iteration_statement: WHILE LB . expression RB statement
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    expression                 進入狀態 154
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 145
+
+   98 jump_statement: RET SEMICOLON .
+
+    $預設  使用規則 98 以縮減 (jump_statement)
+
+
+狀態 146
+
+   37 expression: expression . COMMA assignment_expression
+   99 jump_statement: RET expression . SEMICOLON
+
+    COMMA      偏移，並進入狀態 57
+    SEMICOLON  偏移，並進入狀態 155
+
+
+狀態 147
+
+   22 internal_declaration: type ID . ASGN expression SEMICOLON
+   23                     | type ID . SEMICOLON
+
+    ASGN       偏移，並進入狀態 156
+    SEMICOLON  偏移，並進入狀態 157
+
+
+狀態 148
+
+   17 compound_statement: LCB block_item_list RCB .
+
+    $預設  使用規則 17 以縮減 (compound_statement)
+
+
+狀態 149
+
+   19 block_item_list: block_item_list block_item .
+
+    $預設  使用規則 19 以縮減 (block_item_list)
+
+
+狀態 150
+
+   34 expression_statement: expression SEMICOLON .
+
+    $預設  使用規則 34 以縮減 (expression_statement)
+
+
+狀態 151
+
+   65 argument_expression_list: argument_expression_list COMMA assignment_expression .
+
+    $預設  使用規則 65 以縮減 (argument_expression_list)
+
+
+狀態 152
+
+   67 conditional_expression: logical_or_expression '?' expression ':' conditional_expression .
+
+    $預設  使用規則 67 以縮減 (conditional_expression)
+
+
+狀態 153
+
+   37 expression: expression . COMMA assignment_expression
+   95 selection_statement: IF LB expression . RB statement ELSE statement
+   96                    | IF LB expression . RB statement
+
+    RB     偏移，並進入狀態 158
+    COMMA  偏移，並進入狀態 57
+
+
+狀態 154
+
+   37 expression: expression . COMMA assignment_expression
+   97 iteration_statement: WHILE LB expression . RB statement
+
+    RB     偏移，並進入狀態 159
+    COMMA  偏移，並進入狀態 57
+
+
+狀態 155
+
+   99 jump_statement: RET expression SEMICOLON .
+
+    $預設  使用規則 99 以縮減 (jump_statement)
+
+
+狀態 156
+
+   22 internal_declaration: type ID ASGN . expression SEMICOLON
+
+    SUB      偏移，並進入狀態 24
+    INC      偏移，並進入狀態 25
+    DEC      偏移，並進入狀態 26
+    TRUE     偏移，並進入狀態 27
+    FALSE    偏移，並進入狀態 28
+    I_CONST  偏移，並進入狀態 29
+    F_CONST  偏移，並進入狀態 30
+    S_CONST  偏移，並進入狀態 31
+    ID       偏移，並進入狀態 32
+
+    expression                 進入狀態 160
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+
+
+狀態 157
+
+   23 internal_declaration: type ID SEMICOLON .
+
+    $預設  使用規則 23 以縮減 (internal_declaration)
+
+
+狀態 158
+
+   95 selection_statement: IF LB expression RB . statement ELSE statement
+   96                    | IF LB expression RB . statement
+
+    SUB        偏移，並進入狀態 24
+    INC        偏移，並進入狀態 25
+    DEC        偏移，並進入狀態 26
+    LCB        偏移，並進入狀態 89
+    PRINT      偏移，並進入狀態 1
+    IF         偏移，並進入狀態 121
+    WHILE      偏移，並進入狀態 122
+    TRUE       偏移，並進入狀態 27
+    FALSE      偏移，並進入狀態 28
+    RET        偏移，並進入狀態 123
+    SEMICOLON  偏移，並進入狀態 124
+    I_CONST    偏移，並進入狀態 29
+    F_CONST    偏移，並進入狀態 30
+    S_CONST    偏移，並進入狀態 31
+    ID         偏移，並進入狀態 32
+
+    compound_statement         進入狀態 126
+    statement                  進入狀態 161
+    print_func_statement       進入狀態 131
+    expression_statement       進入狀態 132
+    expression                 進入狀態 133
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+    selection_statement        進入狀態 134
+    iteration_statement        進入狀態 135
+    jump_statement             進入狀態 136
+
+
+狀態 159
+
+   97 iteration_statement: WHILE LB expression RB . statement
+
+    SUB        偏移，並進入狀態 24
+    INC        偏移，並進入狀態 25
+    DEC        偏移，並進入狀態 26
+    LCB        偏移，並進入狀態 89
+    PRINT      偏移，並進入狀態 1
+    IF         偏移，並進入狀態 121
+    WHILE      偏移，並進入狀態 122
+    TRUE       偏移，並進入狀態 27
+    FALSE      偏移，並進入狀態 28
+    RET        偏移，並進入狀態 123
+    SEMICOLON  偏移，並進入狀態 124
+    I_CONST    偏移，並進入狀態 29
+    F_CONST    偏移，並進入狀態 30
+    S_CONST    偏移，並進入狀態 31
+    ID         偏移，並進入狀態 32
+
+    compound_statement         進入狀態 126
+    statement                  進入狀態 162
+    print_func_statement       進入狀態 131
+    expression_statement       進入狀態 132
+    expression                 進入狀態 133
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+    selection_statement        進入狀態 134
+    iteration_statement        進入狀態 135
+    jump_statement             進入狀態 136
+
+
+狀態 160
+
+   22 internal_declaration: type ID ASGN expression . SEMICOLON
+   37 expression: expression . COMMA assignment_expression
+
+    COMMA      偏移，並進入狀態 57
+    SEMICOLON  偏移，並進入狀態 163
+
+
+狀態 161
+
+   95 selection_statement: IF LB expression RB statement . ELSE statement
+   96                    | IF LB expression RB statement .
+
+    ELSE  偏移，並進入狀態 164
+
+    ELSE     [使用規則 96 以縮減 (selection_statement)]
+    $預設  使用規則 96 以縮減 (selection_statement)
+
+
+狀態 162
+
+   97 iteration_statement: WHILE LB expression RB statement .
+
+    $預設  使用規則 97 以縮減 (iteration_statement)
+
+
+狀態 163
+
+   22 internal_declaration: type ID ASGN expression SEMICOLON .
+
+    $預設  使用規則 22 以縮減 (internal_declaration)
+
+
+狀態 164
+
+   95 selection_statement: IF LB expression RB statement ELSE . statement
+
+    SUB        偏移，並進入狀態 24
+    INC        偏移，並進入狀態 25
+    DEC        偏移，並進入狀態 26
+    LCB        偏移，並進入狀態 89
+    PRINT      偏移，並進入狀態 1
+    IF         偏移，並進入狀態 121
+    WHILE      偏移，並進入狀態 122
+    TRUE       偏移，並進入狀態 27
+    FALSE      偏移，並進入狀態 28
+    RET        偏移，並進入狀態 123
+    SEMICOLON  偏移，並進入狀態 124
+    I_CONST    偏移，並進入狀態 29
+    F_CONST    偏移，並進入狀態 30
+    S_CONST    偏移，並進入狀態 31
+    ID         偏移，並進入狀態 32
+
+    compound_statement         進入狀態 126
+    statement                  進入狀態 165
+    print_func_statement       進入狀態 131
+    expression_statement       進入狀態 132
+    expression                 進入狀態 133
+    assignment_expression      進入狀態 34
+    unary_expression           進入狀態 35
+    postfix_expression         進入狀態 36
+    primary_expression         進入狀態 37
+    constant                   進入狀態 38
+    conditional_expression     進入狀態 39
+    logical_or_expression      進入狀態 40
+    logical_and_expression     進入狀態 41
+    inclusive_or_expression    進入狀態 42
+    exclusive_or_expression    進入狀態 43
+    and_expression             進入狀態 44
+    equality_expression        進入狀態 45
+    relational_expression      進入狀態 46
+    additive_expression        進入狀態 47
+    multiplicative_expression  進入狀態 48
+    selection_statement        進入狀態 134
+    iteration_statement        進入狀態 135
+    jump_statement             進入狀態 136
+
+
+狀態 165
+
+   95 selection_statement: IF LB expression RB statement ELSE statement .
+
+    $預設  使用規則 95 以縮減 (selection_statement)
